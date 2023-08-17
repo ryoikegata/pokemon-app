@@ -7,10 +7,9 @@ import Card from './components/Card';
 function App() {
   const pokemonApiUrl = "https://pokeapi.co/api/v2/pokemon/";
   const [pokemonData, setPokemonData] = useState([]);
-  const [pokemonName, setPokemonName] = useState([]);
   const [nextPokemonUrl,setNextPokemonUrl] = useState("");
   const [prevPokemonUrl,setPrevPokemonUrl] = useState("");
-
+  
 
 // 全てのポケモンを取得する定義
   const getPokemonAll = (url) => {
@@ -20,17 +19,6 @@ function App() {
       .then((data) => resolve(data))
     })
   }
-  
-  // // 一体ずつにポケモンを取得する定義
-  // const getPokemon = (url) => {
-  //   return new Promise((resolve,reject) => {
-  //     fetch(url)
-  //     .then((res) => res.json())
-  //     .then((data) => resolve(data))
-  //   })
-  // }
-
-
 
   // それぞれのポケモンを取得する
   const pokemon = async (data) => {
@@ -80,6 +68,9 @@ function App() {
       await pokemon(data.results);
       setPrevPokemonUrl(data.previous);
     }
+
+
+    
 
   return (
     <>
