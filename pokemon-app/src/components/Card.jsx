@@ -10,6 +10,7 @@ function Card  ({data})   {
     console.log(poke.id);
     setSelectPokemon(poke);
     setShowDetail(true);
+    document.body.classList.add('overlay-open');
   };
 
 
@@ -20,11 +21,11 @@ function Card  ({data})   {
 
 
 return (
-  <div className='flex flex-wrap gap-20 w-full justify-center'>
-    {showDetail && <Detail data={selectPokemon} onClose={() => setShowDetail(false)} />}
+  <div className='flex flex-wrap md:gap-20 gap-2 w-full justify-center mb-16'>
+    {showDetail && <Detail data={selectPokemon} onClose={() => setShowDetail(false)}/>}
 {data.map((poke) => (
-<div key={poke.id} className='bg-blue-300 shadow-xl rounded-xl cursor-pointer flex flex-col'  onClick={() => showDetailHandle(poke)}>
-<p className='text-center items-center text-2xl font-black'>{poke.jaName}</p>
+<div key={poke.id} className='hover:scale-150 duration-300 rounded-xl cursor-pointer flex flex-col'  onClick={() => showDetailHandle(poke)}>
+<p className='text-center items-center text-lg font-black'>{poke.jaName}</p>
 <img className='w-36 h-36 p-10' src={poke.sprites?.other["dream_world"].front_default} />
 </div>
 ))}
