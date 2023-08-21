@@ -3,32 +3,17 @@ import './App.css';
 import { useEffect, useState } from "react";
 import Header from './components/Header';
 import Card from './components/Card';
+import Footer from './components/Footer';
+import { getPokemonAll, getItem } from './utils/ApiFetch';
 
 function App() {
   const pokemonApiUrl = "https://pokeapi.co/api/v2/pokemon/";
+  const itemUrl = " https://pokeapi.co/api/v2/item/";
   const [pokemonData, setPokemonData] = useState([]);
-  const [pokemonName, setPokemonName] = useState([]);
   const [nextPokemonUrl,setNextPokemonUrl] = useState("");
   const [prevPokemonUrl,setPrevPokemonUrl] = useState("");
-
-
-// 全てのポケモンを取得する定義
-  const getPokemonAll = (url) => {
-    return new Promise((resolve,reject) => {
-      fetch(url)
-      .then((res) => res.json())
-      .then((data) => resolve(data))
-    })
-  }
+  const [itemData, setItemData] = useState([]);
   
-  // // 一体ずつにポケモンを取得する定義
-  // const getPokemon = (url) => {
-  //   return new Promise((resolve,reject) => {
-  //     fetch(url)
-  //     .then((res) => res.json())
-  //     .then((data) => resolve(data))
-  //   })
-  // }
 
 
 
@@ -46,6 +31,17 @@ function App() {
       );
       setPokemonData(_pokemonData);
     }
+
+    // itemを取得する
+    const item = async (data) => {
+      let _itemData = await Promise.all(
+        data.map(async(item) => {
+          let itemResult = await getItem(item.url);
+          return itemResult;
+        })
+      )
+      setItemData(_itemData);
+    }
   
   
   
@@ -62,7 +58,17 @@ function App() {
     fetchPokemonData();
   },[],
   );
-  
+
+  useEffect(() => {
+    // itemのデータをfetchする
+    const fetchItemData = async () => {
+      let res = await getItem(itemUrl);
+      console.log(res);
+      item(res.results);
+    }
+    fetchItemData();
+  },[],)
+
   // 次のページに移動するときの処理
   const nextLoadPage = async () => {
     let data = await getPokemonAll(nextPokemonUrl);
@@ -81,13 +87,15 @@ function App() {
       setPrevPokemonUrl(data.previous);
     }
 
+
+    
+
   return (
-    <>
+    <div className='bg-gradient-to-r from-green-200 to-green-500 overflow-hidden'>
     <Header/>
     <Card data={pokemonData}/>
-    <button onClick={prevLoadPage}>戻る</button>
-    <button onClick={nextLoadPage}>クリック</button>
-    </>
+    <Footer onPrevClick={prevLoadPage} onNextClick={nextLoadPage} dataItem={itemData}/>
+    </div>
   );
 }
 
