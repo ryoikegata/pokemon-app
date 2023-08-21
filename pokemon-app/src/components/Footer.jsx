@@ -4,12 +4,11 @@ function Footer({onPrevClick,onNextClick,dataItem})  {
 
   const [randomImageUrl, setRandomImageUrl] = useState();
 
-
+// ランダムにitemを表示させる処理
 async function random () {
   let randomIndex = Math.floor(Math.random() * dataItem.length);
   let randomItem = dataItem[randomIndex];
-  console.log(randomItem.sprites.default);
-  setRandomImageUrl(randomItem.sprites.default);
+  setRandomImageUrl(randomItem?.sprites.default);
 }
 
 useEffect(() => {

@@ -6,8 +6,8 @@ function Card  ({data})   {
   const [selectPokemon, setSelectPokemon] = useState();
   const [showDetail, setShowDetail] = useState(false);
 
+  // Detailを表示・非表示したときの処理
   const showDetailHandle = (poke) => {
-    console.log(poke.id);
     setSelectPokemon(poke);
     setShowDetail(true);
     document.body.classList.add('overlay-open');

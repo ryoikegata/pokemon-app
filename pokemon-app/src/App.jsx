@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import { getPokemonAll, getItem } from './utils/ApiFetch';
 
 function App() {
+  // 必要なdataを定義
   const pokemonApiUrl = "https://pokeapi.co/api/v2/pokemon/";
   const itemUrl = " https://pokeapi.co/api/v2/item/";
   const [pokemonData, setPokemonData] = useState([]);
@@ -51,7 +52,6 @@ function App() {
     const fetchPokemonData = async () => {
       let res = await getPokemonAll(pokemonApiUrl);
       setNextPokemonUrl(res.next);
-      console.log(res);
       pokemon(res.results);
     }
     
@@ -63,7 +63,6 @@ function App() {
     // itemのデータをfetchする
     const fetchItemData = async () => {
       let res = await getItem(itemUrl);
-      console.log(res);
       item(res.results);
     }
     fetchItemData();

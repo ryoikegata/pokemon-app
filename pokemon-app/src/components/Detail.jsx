@@ -10,13 +10,12 @@ function Detail({ data,onClose}) {
 
 
 
-
+// ポケモンのタイプを日本語にする処理
   const _pokemonType = async (types) => {
     let _pokemonType = await Promise.all(
       types.map(async (type) => {
         const response = await fetch(type);
         const typeData = await response.json();
-        console.log(typeData.names);
         let jaName = typeData.names.find(name => name.language.name === "ja").name;
         return jaName
       })
@@ -28,7 +27,6 @@ function Detail({ data,onClose}) {
   useEffect(() => {
     const resTypes = data.types.map(v => v.type.url);
     _pokemonType(resTypes);
-    console.log(resTypes);
   }, [data.types]);
 
 
